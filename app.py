@@ -183,15 +183,21 @@ if view == "Executive Overview":
 
     left, right = st.columns([1, 1])
     with left:
-        churn_counts = df["y"].value_counts().rename_axis("campaign_outcome").reset_index(name="customers")
+        churn_counts = (
+            df["y"]
+            .map({"no": "No subscription (risk)", "yes": "Subscribed (converted)"})
+            .value_counts()
+            .rename_axis("campaign_outcome")
+            .reset_index(name="customers")
+        )
         fig = px.pie(
             churn_counts,
             values="customers",
             names="campaign_outcome",
             hole=0.55,
             color="campaign_outcome",
-            color_discrete_map={"no": "#c44536", "yes": "#177e89"},
-            title="Customer Churn / Conversion Distribution",
+            color_discrete_map={"No subscription (risk)": "#c44536", "Subscribed (converted)": "#177e89"},
+            title="Campaign Outcome Distribution",
         )
         fig.update_layout(height=410, margin=dict(l=10, r=10, t=55, b=20))
         st.plotly_chart(fig, use_container_width=True)
