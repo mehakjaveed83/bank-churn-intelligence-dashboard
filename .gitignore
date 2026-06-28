@@ -4,6 +4,7 @@ __pycache__/
 .mypy_cache/
 .ruff_cache/
 .streamlit/secrets.toml
+.env.local
 *.log
 .DS_Store
 .Rhistory
