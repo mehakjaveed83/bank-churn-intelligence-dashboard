@@ -258,7 +258,11 @@ with overview:
     with c2:
         metric_card("Features", f"{profile['columns'] - 1}")
     with c3:
-        metric_card("Positive class", f"{profile['positive_rate']:.1%}")
+        metric_card(
+            "Subscription rate",
+            f"{profile['positive_rate']:.1%}",
+            "Share of customers with y = yes in the source campaign data.",
+        )
     with c4:
         metric_card("Duplicates", f"{profile['duplicates']:,}")
 
@@ -269,7 +273,7 @@ with overview:
         st.dataframe(df.head(12), use_container_width=True, hide_index=True)
 
     st.info(
-        "The original target is term-deposit subscription (`y`). This dashboard treats `yes` as the churn-style priority/opportunity class for segmentation and recommendations."
+        "The source target is term-deposit subscription (`y`). The model predicts `yes` as subscription opportunity, while `no` outcomes provide the churn/non-conversion risk framing for retention analysis."
     )
 
 with eda:
@@ -357,7 +361,7 @@ with recommend:
     r1, r2, r3 = st.columns(3)
     with r1:
         metric_card(
-            "Top-list mean probability",
+            "Top-list mean subscription probability",
             f"{recommendations['subscription_probability'].mean():.1%}",
         )
     with r2:
